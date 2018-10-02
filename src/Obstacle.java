@@ -1,48 +1,44 @@
 import org.newdawn.slick.Image;
 
-public class Obstacle extends Thread{
-	public static int HEIGHT = 81;
-	public static int WIDTH = 81;
+public class Obstacle{
 	Image image;
 	Position pos;
+	
 	int length;
 	int speed;
+	boolean moving;
+	long lastTime;
 	
 	public Obstacle(Image image, int length, Position pos, int speed) {
 		this.image = image;
 		this.length = length;
 		this.pos = pos;
 		this.speed = speed;
+		this.moving =  true;
+		this.lastTime = System.currentTimeMillis();
 	}
 	
-	public synchronized void draw() {
-		int targetX = (pos.getX()-length)*(WIDTH);
-		
-		image.draw(targetX,pos.getY()*(HEIGHT-2));
+	public void update() {
+		long time = System.currentTimeMillis();
+		if(time > (lastTime + speed)) {
+			lastTime = time;
+			move();
+		}
+		draw();
+	}
+	public void draw() {
+		image.draw(pos.getX(),pos.getY());
 	}
 	
 	public void move() {
-		pos.setX(pos.getX()+1);
-		
-		if((pos.getX()-length) > Map.WIDTH) {
-			System.out.println("Destroy");
-			pos.setX(0);
+		pos.setX(pos.getX()+5);
+	     if(pos.getX() > (Map.WIDTH*Map.TILE_SIZE)) {
+			moving=false;
 		}
-			
 	}
 
-	@Override
-	public void run() {
-		while(true) {
-			try {
-				Thread.sleep(speed);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			move();
-		}
-		
-
+	public boolean isMoving() {
+		return moving;
 	}
 	
 }

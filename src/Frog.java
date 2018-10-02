@@ -36,7 +36,7 @@ public class Frog {
 		else if(drawY != targetY) {
 			drawPos.setY(drawY + ((drawY > targetY)?-1:1));
 		}else {
-			stop();
+			animation.stopAt(0);
 		}
 
 	    animation.getCurrentFrame().setRotation(90*pos.getRotation());
@@ -44,6 +44,7 @@ public class Frog {
 	}
 
 	public void move(int direction) {
+		if(!canMove()) return;
 		int x = pos.getX();
 		int y = pos.getY();
 		switch(direction) {
@@ -67,18 +68,17 @@ public class Frog {
 		pos.setRotation(direction);
 		animation.restart();
 		animation.stopAt(-1);	
-		
 	}
 	
 	public boolean isValidMovement(int x, int y) {
 		return ((x >= 0) && 
 				(y >= 0) &&
 			    (x < Map.WIDTH) && 
-			    ( y < Map.HEIGHT));
+			    (y < Map.HEIGHT));
 	}
 	
-	public void stop() {
-		animation.stopAt(0);
+	public boolean canMove() {
+		return (Math.abs((pos.getX()*81)-drawPos.getX()) < 81);
 	}
 	
 	public void update() {

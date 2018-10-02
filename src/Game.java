@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +17,8 @@ public class Game extends BasicGame{
 	Map map;
 	Frog frog;
 	Obstacle obstacle, obstacle2;
-
+	ObstacleManager manager;
+	long lastTicks = 0;
 	public Game(String title) {
 		super(title);
 	}
@@ -25,19 +27,14 @@ public class Game extends BasicGame{
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		map.draw();
 		frog.draw();
-		obstacle.draw();
-		obstacle2.draw();
-		
+		manager.update();
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		map = new Map();
 		frog = new Frog(new Position(0,8));
-		obstacle = new Obstacle(Util.getImage("/res/car1.png"),2, new Position(11,4),100);
-		obstacle.start();
-		obstacle2 = new Obstacle(Util.getImage("/res/car2.png"),2, new Position(5,5),200);
-		obstacle2.start();
+		manager = new ObstacleManager();
 	}
 
 	@Override
@@ -64,7 +61,15 @@ public class Game extends BasicGame{
 	}
 	
 
+	/*public void clock() {
+		long ticks = System.currentTimeMillis();
+		if(ticks > (lastTicks + 20)) {
+			lastTicks = ticks;
+			updateObstacles();
+		}
+	}*/
 	
+
 	
 	public static void main(String[] args)
 	{

@@ -74,7 +74,8 @@ public class Frog {
 		return ((x >= 0) && 
 				(y >= 0) &&
 			    (x < Map.WIDTH) && 
-			    (y < Map.HEIGHT));
+			    (y < Map.HEIGHT) &&
+			    (!((y==0) && (x % 2 == 0))));
 	}
 	
 	public boolean canMove() {

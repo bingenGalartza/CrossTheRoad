@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -13,5 +16,12 @@ public class Util {
 			e.printStackTrace();
 		}
 	    return image;
+	}
+	
+	public static List<Image> getImages(List<String> paths){
+		List<Image> list = new ArrayList<>();
+		for(String p : paths)
+			list.add(getImage(p));
+		return list;
 	}
 }

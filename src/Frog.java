@@ -10,12 +10,11 @@ public class Frog {
 	Animation animation;
 	Position pos;
 	Position drawPos;
+	boolean moving, onTrunk;
 	
-	
-	public Frog(Position pos) {
-		this.pos = pos;
+	public Frog() {
 		initAnimation();
-		drawPos = new Position(pos.getX()*(WIDTH-2),pos.getY()*(HEIGHT-2));
+		resetPos();
 	}
 	
 	public void initAnimation() {
@@ -27,16 +26,19 @@ public class Frog {
 	public void draw() {
 		int drawX = drawPos.getX();
 		int drawY = drawPos.getY();
-		int targetX = pos.getX() * (WIDTH-2);
-		int targetY = pos.getY() * (HEIGHT-2);
+		int targetX = pos.getX();
+		int targetY = pos.getY();
 
 		if(drawX != targetX) {
 			drawPos.setX(drawX + ((drawX > targetX)?-1:1));
+			moving = true;
 		}
 		else if(drawY != targetY) {
 			drawPos.setY(drawY + ((drawY > targetY)?-1:1));
+			moving = true;
 		}else {
 			animation.stopAt(0);
+			moving = false;
 		}
 
 	    animation.getCurrentFrame().setRotation(90*pos.getRotation());
@@ -49,16 +51,16 @@ public class Frog {
 		int y = pos.getY();
 		switch(direction) {
 		case 0:
-			y-=1;
+			y-=Map.TILE_RENDER_SIZE;
 			break;
 		case 1:
-			x+=1;
+			x+=Map.TILE_RENDER_SIZE;
 			break;
 		case 2:
-			y+=1;
+			y+=Map.TILE_RENDER_SIZE;
 			break;
 		case 3:
-			x-=1;
+			x-=Map.TILE_RENDER_SIZE;
 			break;
 		}
 		if(isValidMovement(x,y)){
@@ -73,17 +75,48 @@ public class Frog {
 	public boolean isValidMovement(int x, int y) {
 		return ((x >= 0) && 
 				(y >= 0) &&
-			    (x < Map.WIDTH) && 
-			    (y < Map.HEIGHT) &&
-			    (!((y==0) && (x % 2 == 0))));
+			    (x < (Map.WIDTH*Map.TILE_RENDER_SIZE)) && 
+			    (y < (Map.HEIGHT*Map.TILE_RENDER_SIZE))
+			    //(!((y==0) && (x % 2 == 0))
+			    		);
 	}
 	
 	public boolean canMove() {
-		return (Math.abs((pos.getX()*81)-drawPos.getX()) < 81);
+		return (Math.abs(pos.getX()-drawPos.getX()) < Map.TILE_RENDER_SIZE);
 	}
 	
 	public void update() {
 		animation.draw();
+	}
+	
+	public Position getDrawPosition() {
+		return drawPos;
+	}
+	
+	public Position getBlockPosition() {
+		return pos;
+	}
+	
+	public void resetPos() {
+		pos = new Position(Map.spawnpoint.getX(),Map.spawnpoint.getY());
+		drawPos = new Position(pos.getX(),pos.getY());
+	}
+	
+	public void kill() {
+		System.out.println("HIT");
+		resetPos();
+	}
+	
+	public boolean isMoving() {
+		return moving;
+	}
+	
+	public boolean isOnTrunk() {
+		return onTrunk;
+	}
+	
+	public void setOnTrunk(boolean bool) {
+		onTrunk = bool;
 	}
 	
 }

@@ -24,7 +24,7 @@ public class Game extends BasicGame{
 	static final String[] trunks = {"/res/enborra3x1.png","/res/enborra4x1.png","/res/enborra5x1.png"};
 	Map map;
 	Frog frog;
-	List<ObstacleRow> obstacleRows;
+	List<ObstacleRow> roadObstacles, riverObstacles;
 	
 	long lastTicks = 0;
 	public Game(String title) {
@@ -34,7 +34,9 @@ public class Game extends BasicGame{
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		map.draw();
-		for(ObstacleRow row : obstacleRows)
+		for(ObstacleRow row : roadObstacles)
+			row.update();
+		for(ObstacleRow row : riverObstacles)
 			row.update();
 		frog.draw();
 	}
@@ -71,14 +73,15 @@ public class Game extends BasicGame{
 	}
 	
 	public void loadRows() {
-		obstacleRows = new ArrayList<>();
+		roadObstacles = new ArrayList<>();
 		List<Image> carImages = Util.getImages(Arrays.asList(cars));
+		roadObstacles.add(new ObstacleRow(carImages,4,20,2000));
+		roadObstacles.add(new ObstacleRow(carImages,5,10,2000));
+		riverObstacles = new ArrayList<>();
 		List<Image> trunkImages = Util.getImages(Arrays.asList(trunks));
-		obstacleRows.add(new ObstacleRow(carImages,4,20,2000));
-		obstacleRows.add(new ObstacleRow(carImages,5,10,2000));
-		obstacleRows.add(new ObstacleRow(trunkImages,1,20,2000));
-		obstacleRows.add(new ObstacleRow(trunkImages,2,30,4000));
-		obstacleRows.add(new ObstacleRow(trunkImages,7,20,2000));
+		riverObstacles.add(new ObstacleRow(trunkImages,1,20,2000));
+		riverObstacles.add(new ObstacleRow(trunkImages,2,30,4000));
+		riverObstacles.add(new ObstacleRow(trunkImages,7,20,2000));
 	}
 	
 	

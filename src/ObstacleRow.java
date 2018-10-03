@@ -56,4 +56,8 @@ public class ObstacleRow {
 		//}
 	}
 	
+	public List<Obstacle> getObstacles(){
+		return obstacles;
+	}
+	
 }

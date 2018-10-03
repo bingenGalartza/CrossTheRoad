@@ -39,12 +39,14 @@ public class Game extends BasicGame{
 		for(ObstacleRow row : riverObstacles)
 			row.update();
 		frog.draw();
+		checkCollisions();
+		checkTrunks();
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		map = new Map();
-		frog = new Frog(new Position(0,8));
+		frog = new Frog();
 		loadRows();
 	}
 
@@ -81,9 +83,33 @@ public class Game extends BasicGame{
 		List<Image> trunkImages = Util.getImages(Arrays.asList(trunks));
 		riverObstacles.add(new ObstacleRow(trunkImages,1,20,2000));
 		riverObstacles.add(new ObstacleRow(trunkImages,2,30,4000));
-		riverObstacles.add(new ObstacleRow(trunkImages,7,20,2000));
+		riverObstacles.add(new ObstacleRow(trunkImages,7,40,4000));
 	}
 	
+	public void checkTrunks() {
+		for(ObstacleRow rows : riverObstacles) {
+			for(Obstacle obs : rows.getObstacles()) {
+				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX(), frog.getDrawPosition().getY(),Frog.WIDTH);
+				if(hit && !frog.isMoving()) {
+					frog.getDrawPosition().setX(obs.getPosition().getX());
+					frog.getDrawPosition().setY(obs.getPosition().getY());
+					frog.getBlockPosition().setX(obs.getPosition().getX());
+					frog.getBlockPosition().setY(obs.getPosition().getY());
+				}
+					
+			}
+		}
+	}
+	
+	public void checkCollisions() {
+		for(ObstacleRow rows : roadObstacles) {
+			for(Obstacle obs : rows.getObstacles()) {
+				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX(), frog.getDrawPosition().getY(),Frog.WIDTH);
+				if(hit)
+					frog.kill();
+			}
+		}
+	}
 	
 	
 	public static void main(String[] args)

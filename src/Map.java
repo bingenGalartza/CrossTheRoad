@@ -12,7 +12,7 @@ public class Map {
 	public static enum Tile {GRASS,WATER,ROAD,ROAD_UP,ROAD_DOWN,END,START,HOME};
 	public static Tile[] TILES = {Tile.END,Tile.WATER,Tile.WATER,Tile.GRASS,Tile.ROAD_UP
 			                     ,Tile.ROAD_DOWN,Tile.GRASS,Tile.WATER,Tile.START};
-	
+	public static Position spawnpoint = new Position(4*TILE_SIZE,8*TILE_SIZE);
 	SpriteSheet sprite;
 	
 	public Map () {

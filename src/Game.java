@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,8 +76,8 @@ public class Game extends BasicGame{
 	public void loadRows() {
 		roadObstacles = new ArrayList<>();
 		List<Image> carImages = Util.getImages(Arrays.asList(cars));
-		roadObstacles.add(new ObstacleRow(carImages,4,20,2000));
-		roadObstacles.add(new ObstacleRow(carImages,5,10,2000));
+		roadObstacles.add(new ObstacleRow(carImages,4,30,3000));
+		roadObstacles.add(new ObstacleRow(carImages,5,20,3000));
 		riverObstacles = new ArrayList<>();
 		List<Image> trunkImages = Util.getImages(Arrays.asList(trunks));
 		riverObstacles.add(new ObstacleRow(trunkImages,1,20,2000));
@@ -89,7 +88,7 @@ public class Game extends BasicGame{
 	public void checkTrunks() {
 		for(ObstacleRow rows : riverObstacles) {
 			for(Obstacle obs : rows.getObstacles()) {
-				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX(), frog.getDrawPosition().getY(),Frog.WIDTH);
+				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX()-15, frog.getDrawPosition().getY(),Frog.WIDTH);
 				if(hit && !frog.isMoving()) {
 					frog.getDrawPosition().setX(obs.getPosition().getX());
 					frog.getDrawPosition().setY(obs.getPosition().getY());

@@ -103,7 +103,6 @@ public class Frog {
 	}
 	
 	public void kill() {
-		System.out.println("HIT");
 		resetPos();
 	}
 	
@@ -117,6 +116,10 @@ public class Frog {
 	
 	public void setOnTrunk(boolean bool) {
 		onTrunk = bool;
+	}
+
+	public Position getPosition() {
+		return pos;
 	}
 	
 }

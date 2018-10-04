@@ -1,4 +1,5 @@
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
 
 public class Obstacle{
 	Image image;
@@ -35,9 +36,11 @@ public class Obstacle{
 	}
 	
 	public boolean checkIfInside(int x2, int y2, int length2) {
-		int x = pos.getX();
-		int y = pos.getY();
-		return x < x2 + length2 && x + length > x2 && y < y2 + Map.TILE_RENDER_SIZE && y + Map.TILE_RENDER_SIZE > y2;
+		//FIXME 
+		Rectangle frog = new Rectangle(x2,y2,length2,length2);
+		Rectangle obstacle = new Rectangle(pos.getX(),pos.getY()+30,length-20,20);
+		
+		return frog.intersects(obstacle);
 	}
 	
 }

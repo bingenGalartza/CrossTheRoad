@@ -29,6 +29,7 @@ public class Game extends BasicGame{
 	//for staying at trunk after first hit
 	boolean firstHit=false;
 	int dif=0;
+	AudioManager audioManager;
 	
 	public Game(String title) {
 		super(title);
@@ -53,6 +54,8 @@ public class Game extends BasicGame{
 		map = new Map();
 		frog = new Frog();
 		loadRows();
+		audioManager = new AudioManager();
+		audioManager.playMusic();
 	}
 
 	@Override
@@ -63,6 +66,7 @@ public class Game extends BasicGame{
 	
 	@Override
 	public void keyPressed(int key, char c) {
+		audioManager.playFrog();
 		switch(key) {
 		case Input.KEY_DOWN:
 			frog.move(2);
@@ -92,8 +96,6 @@ public class Game extends BasicGame{
 	}
 	
 	public void checkTrunks() {
-		
-		
 		for(ObstacleRow rows : riverObstacles) {
 			for(Obstacle obs : rows.getObstacles()) {
 				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX()-15, frog.getDrawPosition().getY(),Frog.WIDTH);
@@ -122,8 +124,10 @@ public class Game extends BasicGame{
 		for(ObstacleRow rows : roadObstacles) {
 			for(Obstacle obs : rows.getObstacles()) {
 				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX(), frog.getDrawPosition().getY(),Frog.WIDTH);
-				if(hit)
+				if(hit) {
 					frog.kill();
+					audioManager.playCrushed();
+				}
 			}
 		}
 	}
@@ -134,7 +138,7 @@ public class Game extends BasicGame{
 				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX()-15, frog.getDrawPosition().getY(),Frog.WIDTH);
 				if(!firstHit && frogInWaterRow(obs) && !frog.isMoving()) {
 					frog.kill();
-					System.out.println("drowned");
+					audioManager.playDrowned();
 				}
 			}
 		}
@@ -154,7 +158,6 @@ public class Game extends BasicGame{
 					&& (frogY>h.getY() && frogY<h.getY()+Map.TILE_RENDER_SIZE);
 			if(inside && !frog.isMoving()) {
 					frog.kill();
-					System.out.println("arrived home!");
 			}
 		}
 	}

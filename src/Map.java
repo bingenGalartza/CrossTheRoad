@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
@@ -43,6 +46,14 @@ public class Map {
 			else
 				home.draw(column*TILE_RENDER_SIZE,0);
 		}
+	}
+	public List<Position> getHomeBlocks(){
+		List<Position> homes= new ArrayList<>();
+		for(int i=0;i<5;i++) {
+			Position p=new Position((i*2+1)*TILE_SIZE,0*TILE_SIZE);
+			homes.add(p);
+		}	
+		return homes;
 	}
 
 	

@@ -26,6 +26,10 @@ public class Game extends BasicGame{
 	List<ObstacleRow> roadObstacles, riverObstacles;
 	
 	long lastTicks = 0;
+	//for staying at trunk after first hit
+	boolean firstHit=false;
+	int dif=0;
+	
 	public Game(String title) {
 		super(title);
 	}
@@ -40,6 +44,8 @@ public class Game extends BasicGame{
 		frog.draw();
 		checkCollisions();
 		checkTrunks();
+		checkWater();
+		checkHome();
 	}
 
 	@Override
@@ -86,16 +92,28 @@ public class Game extends BasicGame{
 	}
 	
 	public void checkTrunks() {
+		
+		
 		for(ObstacleRow rows : riverObstacles) {
 			for(Obstacle obs : rows.getObstacles()) {
 				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX()-15, frog.getDrawPosition().getY(),Frog.WIDTH);
+			   
 				if(hit && !frog.isMoving()) {
-					frog.getDrawPosition().setX(obs.getPosition().getX());
+					if(!firstHit) {
+						firstHit=true;
+						dif=(frog.getPosition().getX()-obs.getPosition().getX());
+						System.out.println(dif);
+					}
+					frog.getDrawPosition().setX(obs.getPosition().getX()+dif);
 					frog.getDrawPosition().setY(obs.getPosition().getY());
-					frog.getBlockPosition().setX(obs.getPosition().getX());
+					frog.getBlockPosition().setX(obs.getPosition().getX()+dif);
 					frog.getBlockPosition().setY(obs.getPosition().getY());
-				}
 					
+				}
+				if (!hit && frog.isMoving()) {
+					firstHit=false;
+					//System.out.println("reset firsthit");
+				}
 			}
 		}
 	}
@@ -110,6 +128,36 @@ public class Game extends BasicGame{
 		}
 	}
 	
+	public void checkWater() {
+		for(ObstacleRow rows : riverObstacles) {
+			for(Obstacle obs : rows.getObstacles()) {
+				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX()-15, frog.getDrawPosition().getY(),Frog.WIDTH);
+				if(!firstHit && frogInWaterRow(obs) && !frog.isMoving()) {
+					frog.kill();
+					System.out.println("drowned");
+				}
+			}
+		}
+	}
+	public boolean frogInWaterRow(Obstacle obs) {
+		return(frog.getPosition().getY()+frog.HEIGHT/2>obs.getPosition().getY() 
+				&& frog.getPosition().getY()+frog.HEIGHT/2<obs.getPosition().getY()+Map.TILE_RENDER_SIZE);
+	}
+				
+	public void checkHome() {
+		List<Position> homes=map.getHomeBlocks();
+		
+		for(Position h : homes) {
+			int frogX=frog.getPosition().getX()+frog.WIDTH/2;
+			int frogY=frog.getPosition().getY()+frog.HEIGHT/2;
+			boolean inside=(frogX>h.getX() && frogX<h.getX()+Map.TILE_RENDER_SIZE)
+					&& (frogY>h.getY() && frogY<h.getY()+Map.TILE_RENDER_SIZE);
+			if(inside && !frog.isMoving()) {
+					frog.kill();
+					System.out.println("arrived home!");
+			}
+		}
+	}
 	
 	public static void main(String[] args)
 	{

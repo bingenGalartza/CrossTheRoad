@@ -82,7 +82,8 @@ public class Frog {
 	}
 	
 	public boolean canMove() {
-		return (Math.abs(pos.getX()-drawPos.getX()) < Map.TILE_RENDER_SIZE);
+		return (Math.abs(pos.getX()-drawPos.getX()) < Map.TILE_RENDER_SIZE &&
+				Math.abs(pos.getY()-drawPos.getY()) < Map.TILE_RENDER_SIZE);
 	}
 	
 	public void update() {

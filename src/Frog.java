@@ -11,10 +11,14 @@ public class Frog {
 	Position pos;
 	Position drawPos;
 	boolean moving, onTrunk;
+	int deaths;
+	int bonuses;
 	
 	public Frog() {
 		initAnimation();
 		resetPos();
+		deaths=0;
+		bonuses=0;
 	}
 	
 	public void initAnimation() {
@@ -82,7 +86,8 @@ public class Frog {
 	}
 	
 	public boolean canMove() {
-		return (Math.abs(pos.getX()-drawPos.getX()) < Map.TILE_RENDER_SIZE);
+		return (Math.abs(pos.getX()-drawPos.getX()) < Map.TILE_RENDER_SIZE &&
+				Math.abs(pos.getY()-drawPos.getY()) < Map.TILE_RENDER_SIZE);
 	}
 	
 	public void update() {
@@ -97,6 +102,15 @@ public class Frog {
 		return pos;
 	}
 	
+	public int getDeaths() {
+		return deaths;
+	}
+	
+
+	public int getBonuses() {
+		return bonuses;
+	}
+
 	public void resetPos() {
 		pos = new Position(Map.spawnpoint.getX(),Map.spawnpoint.getY());
 		drawPos = new Position(pos.getX(),pos.getY());
@@ -104,6 +118,7 @@ public class Frog {
 	
 	public void kill() {
 		resetPos();
+		deaths++;
 	}
 	
 	public boolean isMoving() {

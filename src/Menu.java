@@ -7,6 +7,9 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +24,8 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
 public class Menu implements ActionListener{
+	FileManager fileManager;
+	ArrayList<Score> scoreboard;
 	ImageIcon fondo;
 	JFrame frame;
 	public static int WINDOW_WIDTH = 869;
@@ -34,6 +39,9 @@ public class Menu implements ActionListener{
 		frame.setContentPane(crearPanelVentana());
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		fileManager=new FileManager();
+		scoreboard=fileManager.getScoreboard();
 		
 	}
 	private Container crearPanelVentana() {
@@ -122,6 +130,22 @@ public class Menu implements ActionListener{
 		case "CREDITS": break;
 		}
 		
+	}
+	
+	public void updateScoreboard(Score score) {
+		scoreboard.add(score);
+		Collections.sort(scoreboard, new Comparator<Score>() {
+		    @Override
+		    public int compare(Score s1, Score s2) {
+		    	int p1=s1.getPunctuation();
+		    	int p2=s2.getPunctuation();
+		        return Integer.compare(p2, p1);
+		    }
+		});
+		if (scoreboard.size()>10) {
+			scoreboard.remove(10);
+		}
+		fileManager.writeScoreboard(scoreboard);
 	}
 	
 	public static void main(String[] args) {

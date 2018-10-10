@@ -23,6 +23,7 @@ public class Game extends BasicGame{
 	static final String[] trunks = {"/res/enborra3x1.png","/res/enborra4x1.png","/res/enborra5x1.png"};
 	Map map;
 	Frog frog;
+	Counters counters;
 	List<ObstacleRow> roadObstacles, riverObstacles;
 	
 	long lastTicks = 0;
@@ -43,6 +44,8 @@ public class Game extends BasicGame{
 		for(ObstacleRow row : riverObstacles)
 			row.update();
 		frog.draw();
+		//
+		counters.draw();
 		checkCollisions();
 		checkTrunks();
 		checkWater();
@@ -53,6 +56,7 @@ public class Game extends BasicGame{
 	public void init(GameContainer container) throws SlickException {
 		map = new Map();
 		frog = new Frog();
+		counters=new Counters(frog);
 		loadRows();
 		audioManager = new AudioManager();
 		audioManager.playMusic();

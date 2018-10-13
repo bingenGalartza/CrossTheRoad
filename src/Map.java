@@ -63,8 +63,14 @@ public class Map {
 		occupedPads= new HashMap<>();
 		
 		for (int i=0; i<5; i++) {
-			occupedPads.put(i, true);
+			occupedPads.put(i, false);
 		}
+	}
+	
+	public boolean setWin(int x) {
+		if(occupedPads.get(x)) return false;
+		occupedPads.put(x, true);
+		return true;
 	}
 	
 	public List<Position> getHomeBlocks(){

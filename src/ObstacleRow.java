@@ -50,10 +50,8 @@ public class ObstacleRow {
 	public void addRandomObstacles() {
 		Random rand = new Random();
 		Image img = images.get(rand.nextInt(images.size()));
-		//if(rand.nextBoolean()) {
-			Obstacle obstacle = new Obstacle(img,img.getWidth(),new Position(-img.getWidth(),row*Map.TILE_RENDER_SIZE));
-			obstacles.add(obstacle);
-		//}
+		Obstacle obstacle = new Obstacle(img,img.getWidth(),new Position(-img.getWidth(),row*Map.TILE_RENDER_SIZE));
+		obstacles.add(obstacle);
 	}
 	
 	public List<Obstacle> getObstacles(){

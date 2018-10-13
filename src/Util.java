@@ -12,7 +12,6 @@ public class Util {
 		try {
 			image = new Image(path);
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    return image;

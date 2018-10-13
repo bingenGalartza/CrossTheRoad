@@ -19,7 +19,9 @@ public class Counters {
 	}
 	
 	public long getTime() {
-		return (System.currentTimeMillis() - this.initialTime) /1000;
+		long time = (System.currentTimeMillis() - this.initialTime) /1000;
+		frog.setTime(time);
+		return time;
 	}
 	
 	public void draw() {

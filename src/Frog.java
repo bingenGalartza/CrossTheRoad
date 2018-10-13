@@ -6,19 +6,23 @@ public class Frog {
 	public static String PATH = "/res/frog.png";
 	public static int HEIGHT = 81;
 	public static int WIDTH = 81;
+	public static int INITIAL_POINTS = 10000;
 	SpriteSheet sprite;
 	Animation animation;
 	Position pos;
 	Position drawPos;
 	boolean moving, onTrunk;
-	int deaths;
-	int bonuses;
-	
+	int deaths, bonuses, wins,score;
+	long time;
+
 	public Frog() {
 		initAnimation();
 		resetPos();
 		deaths=0;
 		bonuses=0;
+		wins = 0;
+		score = 0;
+		time = 0;
 	}
 	
 	public void initAnimation() {
@@ -77,11 +81,13 @@ public class Frog {
 	}
 	
 	public boolean isValidMovement(int x, int y) {
+		int xBlock = Util.getValidPosition(x)/ Map.TILE_RENDER_SIZE;
+		int yBlock = Util.getValidPosition(y) / Map.TILE_RENDER_SIZE;
 		return ((x >= 0) && 
 				(y >= 0) &&
 			    (x < (Map.WIDTH*Map.TILE_RENDER_SIZE)) && 
-			    (y < (Map.HEIGHT*Map.TILE_RENDER_SIZE))
-			    //(!((y==0) && (x % 2 == 0))
+			    (y < (Map.HEIGHT*Map.TILE_RENDER_SIZE)) &&
+			    (!((yBlock == 0) && (xBlock % 2 == 0)))
 			    		);
 	}
 	
@@ -117,12 +123,31 @@ public class Frog {
 		deaths++;
 	}
 	
+	public void win() {
+		wins++;
+		resetPos();
+		if(wins == 5) {
+			score = calcScore();
+			System.out.println("Finish! Score: " + score);
+		}
+	}
+	
+	public int calcScore() {
+		return ( INITIAL_POINTS - ((int)time * (INITIAL_POINTS /300))
+		               - (deaths * (INITIAL_POINTS / 20))
+		               + (bonuses * (INITIAL_POINTS /20)));
+	}
+	
 	public boolean isMoving() {
 		return moving;
 	}
 	
 	public boolean isOnTrunk() {
 		return onTrunk;
+	}
+	
+	public void setTime(long time) {
+		this.time = time;
 	}
 	
 	public void setOnTrunk(boolean bool) {

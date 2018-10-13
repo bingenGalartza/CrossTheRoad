@@ -12,7 +12,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-
 public class Game extends BasicGame{
 	public static int WINDOW_WIDTH = 869;
 	public static int WINDOW_HEIGHT = 711;
@@ -45,7 +44,7 @@ public class Game extends BasicGame{
 		checkCollisions();
 		checkTrunks();
 		checkWater();
-		checkHome();
+		checkWin();
 	}
 
 	@Override
@@ -123,19 +122,17 @@ public class Game extends BasicGame{
 		if(!frog.isMoving() && !frog.isOnTrunk() && (Map.getTile(frog.getDrawPosition()) == Map.Tile.WATER)) {
 			frog.kill();
 			audioManager.playDrowned();
-			System.out.println("kill");
 		}
 	}
-				
-	public void checkHome() {
-		List<Position> homes=map.getHomeBlocks();
-		int frogX=frog.getPosition().getX()+frog.WIDTH/2;
-		int frogY=frog.getPosition().getY()+frog.HEIGHT/2;	
-		for(Position h : homes) {
-			boolean inside=(frogX>h.getX() && frogX<h.getX()+Map.TILE_RENDER_SIZE)
-					&& (frogY>h.getY() && frogY<h.getY()+Map.TILE_RENDER_SIZE);
-			if(inside && !frog.isMoving()) {
-					frog.kill();
+	
+	public void checkWin() {
+		int xBlock = Util.getValidPosition(frog.getDrawPosition().getX())/ Map.TILE_RENDER_SIZE;
+		int yBlock = Util.getValidPosition(frog.getDrawPosition().getY()) / Map.TILE_RENDER_SIZE;
+		if(yBlock == 0) {
+			if(map.setWin(xBlock/2))
+				frog.win();
+			else {
+				frog.kill();
 			}
 		}
 	}

@@ -26,9 +26,10 @@ public class Obstacle{
 		if(attachedFrog != null)
 			attachedFrog.getPosition().setX(attachedFrog.getPosition().getX()+ 5);
 	     if(pos.getX() > (Map.WIDTH*Map.TILE_SIZE)) {
+	    	if(attachedFrog != null)
+	    		attachedFrog.kill();
 			moving=false;
 		}
-	     
 	}
 
 	public boolean isMoving() {

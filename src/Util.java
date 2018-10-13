@@ -24,4 +24,21 @@ public class Util {
 			list.add(getImage(p));
 		return list;
 	}
+	
+	public static int getValidPosition(int x) {
+		int validX;
+		int xMinus = x;
+		while(xMinus % Map.TILE_RENDER_SIZE != 0) {
+			xMinus -= 1;
+		}
+		int xPlus = x;
+		while(xPlus % Map.TILE_RENDER_SIZE != 0) {
+			xPlus += 1;
+		}
+		if((x - xMinus) < (xPlus - x))
+			validX = xMinus;
+		else
+			validX = xPlus;	
+		return validX;
+	}
 }

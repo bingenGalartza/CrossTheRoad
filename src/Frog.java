@@ -86,8 +86,8 @@ public class Frog {
 	}
 	
 	public boolean canMove() {
-		return (Math.abs(pos.getX()-drawPos.getX()) < Map.TILE_SIZE &&
-				Math.abs(pos.getY()-drawPos.getY()) < Map.TILE_SIZE);
+		return(drawPos.getY() % Map.TILE_RENDER_SIZE == 0) &&
+				(Math.abs(pos.getX()-drawPos.getX()) < Map.TILE_SIZE);
 	}
 	
 	public void update() {
@@ -96,10 +96,6 @@ public class Frog {
 	
 	public Position getDrawPosition() {
 		return drawPos;
-	}
-	
-	public Position getBlockPosition() {
-		return pos;
 	}
 	
 	public int getDeaths() {

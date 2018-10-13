@@ -4,7 +4,7 @@ import org.newdawn.slick.geom.Rectangle;
 public class Obstacle{
 	Image image;
 	Position pos;
-	
+	Frog attachedFrog;
 	int length;
 	boolean moving;
 	
@@ -17,18 +17,34 @@ public class Obstacle{
 	
 	public void draw() {
 		image.draw(pos.getX(),pos.getY());
+		if(attachedFrog != null)
+			attachedFrog.draw();
 	}
 	
 	public void move() {
 		pos.setX(pos.getX()+5);
+		if(attachedFrog != null)
+			attachedFrog.getPosition().setX(attachedFrog.getPosition().getX()+ 5);
 	     if(pos.getX() > (Map.WIDTH*Map.TILE_SIZE)) {
 			moving=false;
 		}
+	     
 	}
 
 	public boolean isMoving() {
 		return moving;
 	
+	}
+	
+	public void attachFrog(Frog frog) {
+	    frog.setOnTrunk(true);
+		this.attachedFrog = frog;
+	}
+	
+	public void dettachFrog() {
+		if(attachedFrog != null)
+			attachedFrog.setOnTrunk(false);
+		attachedFrog = null;
 	}
 	
 	public Position getPosition() {

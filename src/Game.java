@@ -26,8 +26,6 @@ public class Game extends BasicGame{
 	List<ObstacleRow> roadObstacles, riverObstacles;
 	
 	long lastTicks = 0;
-	//for staying at trunk after first hit
-	boolean firstHit=false;
 	int dif=0;
 	AudioManager audioManager;
 	
@@ -43,7 +41,6 @@ public class Game extends BasicGame{
 		for(ObstacleRow row : riverObstacles)
 			row.update();
 		frog.draw();
-		//
 		counters.draw();
 		checkCollisions();
 		checkTrunks();
@@ -102,20 +99,10 @@ public class Game extends BasicGame{
 		for(ObstacleRow rows : riverObstacles) {
 			for(Obstacle obs : rows.getObstacles()) {
 				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX()-15, frog.getDrawPosition().getY(),Frog.WIDTH);
-			   
-				if(hit && !frog.isMoving()) {
-					if(!firstHit) {
-						firstHit=true;
-						dif=(frog.getPosition().getX()-obs.getPosition().getX());
-					}
-					frog.getDrawPosition().setX(obs.getPosition().getX()+dif);
-					frog.getDrawPosition().setY(obs.getPosition().getY());
-					frog.getBlockPosition().setX(obs.getPosition().getX()+dif);
-					frog.getBlockPosition().setY(obs.getPosition().getY());
-				}
-				if (!hit && frog.isMoving()) {
-					firstHit=false;
-				}
+				if(hit)
+					obs.attachFrog(frog);
+				else
+					obs.dettachFrog();
 			}
 		}
 	}
@@ -133,18 +120,11 @@ public class Game extends BasicGame{
 	}
 	
 	public void checkWater() {
-		for(ObstacleRow rows : riverObstacles) {
-			for(Obstacle obs : rows.getObstacles()) {
-				if(!firstHit && frogInWaterRow(obs) && !frog.isMoving()) {
-					frog.kill();
-					audioManager.playDrowned();
-				}
-			}
+		if(!frog.isMoving() && !frog.isOnTrunk() && (Map.getTile(frog.getDrawPosition()) == Map.Tile.WATER)) {
+			frog.kill();
+			audioManager.playDrowned();
+			System.out.println("kill");
 		}
-	}
-	public boolean frogInWaterRow(Obstacle obs) {
-		return(frog.getPosition().getY()+frog.HEIGHT/2>obs.getPosition().getY() 
-				&& frog.getPosition().getY()+frog.HEIGHT/2<obs.getPosition().getY()+Map.TILE_RENDER_SIZE);
 	}
 				
 	public void checkHome() {

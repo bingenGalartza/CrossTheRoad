@@ -17,10 +17,11 @@ public class Map {
 	public static enum Tile {GRASS,WATER,ROAD,ROAD_UP,ROAD_DOWN,END,START,HOME};
 	public static Tile[] TILES = {Tile.END,Tile.WATER,Tile.WATER,Tile.GRASS,Tile.ROAD_UP
 			                     ,Tile.ROAD_DOWN,Tile.GRASS,Tile.WATER,Tile.START};
-	public static Position spawnpoint = new Position(4*TILE_SIZE,8*TILE_SIZE);
+	public static Position spawnpoint = new Position(4*TILE_RENDER_SIZE,8*TILE_RENDER_SIZE);
 	SpriteSheet sprite;
 	HashMap<Integer,Boolean> occupedPads;
 	Image frogAtHome;
+	
 	public Map () {
 		Image image = Util.getImage(PATH);
 		frogAtHome = Util.getImage(FROGATHOME);
@@ -57,6 +58,7 @@ public class Map {
 			}
 		}
 	}
+	
 	public void initHashMap() {
 		occupedPads= new HashMap<>();
 		
@@ -64,13 +66,21 @@ public class Map {
 			occupedPads.put(i, true);
 		}
 	}
+	
 	public List<Position> getHomeBlocks(){
 		List<Position> homes= new ArrayList<>();
 		for(int i=0;i<5;i++) {
-			Position p=new Position((i*2+1)*TILE_SIZE,0*TILE_SIZE);
+			Position p=new Position((i*2+1)*TILE_SIZE,0);
 			homes.add(p);
 		}	
 		return homes;
+	}
+	
+	public static Tile getTile(Position pos) {
+		int x = Util.getValidPosition(pos.getX());
+		int y = Util.getValidPosition(pos.getY());
+		
+		return TILES[y/TILE_RENDER_SIZE];
 	}
 
 	

@@ -8,33 +8,15 @@ import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.gui.TextField;
 
 public class Counters {
-
-
-	int life;
 	long initialTime;
-	int bonuses;
-	
 	Frog frog;
 	TrueTypeFont font;
 	
 	public Counters(Frog frog) {
-		life=0;
 		initialTime=System.currentTimeMillis();
-		bonuses=0;
 		font=new TrueTypeFont(new Font("Arial",Font.BOLD,16),true);
 		this.frog=frog;
 	}
-
-	public int getLife() {
-		return life;
-	}
-
-	
-
-	public int getBonuses() {
-		return bonuses;
-	}
-	
 	
 	public long getTime() {
 		return (System.currentTimeMillis() - this.initialTime) /1000;

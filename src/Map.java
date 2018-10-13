@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
@@ -10,6 +11,7 @@ import org.newdawn.slick.SpriteSheet;
 public class Map {
 	final static String PATH = "/res/fondoa.png";
 	final static String FROGATHOME = "/res/frogLillyPad.png";
+	static final String BONUS = "res/bonus.png";
 	final static int HEIGHT = 9;
 	final static int WIDTH = 11;
 	final static int TILE_SIZE = 81;
@@ -20,13 +22,15 @@ public class Map {
 	public static Position spawnpoint = new Position(4*TILE_RENDER_SIZE,8*TILE_RENDER_SIZE);
 	SpriteSheet sprite;
 	HashMap<Integer,Boolean> occupedPads;
-	Image frogAtHome;
-	
+	Image frogAtHome, bonus;
+	int bonusPos;
 	public Map () {
 		Image image = Util.getImage(PATH);
 		frogAtHome = Util.getImage(FROGATHOME);
+		bonus = Util.getImage(BONUS);
 		sprite = new SpriteSheet(image,TILE_SIZE,TILE_SIZE);
 		initHashMap();
+		reloadBonus();
 	}
 	
 	public SpriteSheet getSprite() {
@@ -57,6 +61,8 @@ public class Map {
 					
 			}
 		}
+		if(bonusPos != -1)
+			bonus.draw((bonusPos*2+1)*TILE_RENDER_SIZE,0);
 	}
 	
 	public void initHashMap() {
@@ -73,20 +79,29 @@ public class Map {
 		return true;
 	}
 	
-	public List<Position> getHomeBlocks(){
-		List<Position> homes= new ArrayList<>();
-		for(int i=0;i<5;i++) {
-			Position p=new Position((i*2+1)*TILE_SIZE,0);
-			homes.add(p);
-		}	
-		return homes;
-	}
 	
 	public static Tile getTile(Position pos) {
-		int x = Util.getValidPosition(pos.getX());
 		int y = Util.getValidPosition(pos.getY());
 		
 		return TILES[y/TILE_RENDER_SIZE];
+	}
+	
+	public void reloadBonus() {
+		Random rand = new Random();
+		int b;
+		if(rand.nextBoolean()) {
+			do {
+				b = rand.nextInt(5);
+			}while(occupedPads.get(b));
+		}else
+			b = -1;
+
+		bonusPos = b;
+	}
+
+	public int getBonusPos() {
+		
+		return bonusPos;
 	}
 
 	

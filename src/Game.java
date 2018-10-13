@@ -97,7 +97,7 @@ public class Game extends BasicGame{
 	public void checkTrunks() {
 		for(ObstacleRow rows : riverObstacles) {
 			for(Obstacle obs : rows.getObstacles()) {
-				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX()-15, frog.getDrawPosition().getY(),Frog.WIDTH);
+				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX()-15, frog.getDrawPosition().getY(),Frog.WIDTH,true);
 				if(hit)
 					obs.attachFrog(frog);
 				else
@@ -109,10 +109,11 @@ public class Game extends BasicGame{
 	public void checkCollisions() {
 		for(ObstacleRow rows : roadObstacles) {
 			for(Obstacle obs : rows.getObstacles()) {
-				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX(), frog.getDrawPosition().getY(),Frog.WIDTH);
+				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX(), frog.getDrawPosition().getY(),Frog.WIDTH,false);
 				if(hit) {
 					frog.kill();
 					audioManager.playCrushed();
+					map.reloadBonus();
 				}
 			}
 		}
@@ -122,6 +123,7 @@ public class Game extends BasicGame{
 		if(!frog.isMoving() && !frog.isOnTrunk() && (Map.getTile(frog.getDrawPosition()) == Map.Tile.WATER)) {
 			frog.kill();
 			audioManager.playDrowned();
+			map.reloadBonus();
 		}
 	}
 	
@@ -129,11 +131,14 @@ public class Game extends BasicGame{
 		int xBlock = Util.getValidPosition(frog.getDrawPosition().getX())/ Map.TILE_RENDER_SIZE;
 		int yBlock = Util.getValidPosition(frog.getDrawPosition().getY()) / Map.TILE_RENDER_SIZE;
 		if(yBlock == 0) {
-			if(map.setWin(xBlock/2))
+			if(map.setWin(xBlock/2)) {
+				if(map.getBonusPos() == xBlock/2)
+					frog.addBonus();
 				frog.win();
-			else {
+			}else {
 				frog.kill();
 			}
+			map.reloadBonus();
 		}
 	}
 	
@@ -145,6 +150,7 @@ public class Game extends BasicGame{
 			appgc = new AppGameContainer(new Game("Cross the street"));
 			appgc.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
 			appgc.setTargetFrameRate(250);
+			appgc.setShowFPS(false);
 			appgc.start();
 		}
 		catch (SlickException ex)

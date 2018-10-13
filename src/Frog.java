@@ -122,7 +122,9 @@ public class Frog {
 		resetPos();
 		deaths++;
 	}
-	
+	public void addBonus() {
+		bonuses+=1;
+	}
 	public void win() {
 		wins++;
 		resetPos();

@@ -52,10 +52,13 @@ public class Obstacle{
 		return pos;
 	}
 	
-	public boolean checkIfInside(int x2, int y2, int length2) {
+	public boolean checkIfInside(int x2, int y2, int length2, boolean trunk) {
 		//FIXME 
 		Rectangle frog = new Rectangle(x2,y2,length2,length2);
-		Rectangle obstacle = new Rectangle(pos.getX(),pos.getY()+30,length-20,20);
+		int width = length-20;
+		if(trunk)
+			width -= Map.TILE_RENDER_SIZE; 
+		Rectangle obstacle = new Rectangle(pos.getX(),pos.getY()+30,width,20);
 		
 		return frog.intersects(obstacle);
 	}

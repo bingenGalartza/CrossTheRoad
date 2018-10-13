@@ -13,7 +13,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 
-
 public class Game extends BasicGame{
 	public static int WINDOW_WIDTH = 869;
 	public static int WINDOW_HEIGHT = 711;
@@ -66,7 +65,6 @@ public class Game extends BasicGame{
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		frog.update();
-		
 	}
 	
 	@Override
@@ -109,17 +107,14 @@ public class Game extends BasicGame{
 					if(!firstHit) {
 						firstHit=true;
 						dif=(frog.getPosition().getX()-obs.getPosition().getX());
-						System.out.println(dif);
 					}
 					frog.getDrawPosition().setX(obs.getPosition().getX()+dif);
 					frog.getDrawPosition().setY(obs.getPosition().getY());
 					frog.getBlockPosition().setX(obs.getPosition().getX()+dif);
 					frog.getBlockPosition().setY(obs.getPosition().getY());
-					
 				}
 				if (!hit && frog.isMoving()) {
 					firstHit=false;
-					//System.out.println("reset firsthit");
 				}
 			}
 		}
@@ -140,7 +135,6 @@ public class Game extends BasicGame{
 	public void checkWater() {
 		for(ObstacleRow rows : riverObstacles) {
 			for(Obstacle obs : rows.getObstacles()) {
-				boolean hit = obs.checkIfInside(frog.getDrawPosition().getX()-15, frog.getDrawPosition().getY(),Frog.WIDTH);
 				if(!firstHit && frogInWaterRow(obs) && !frog.isMoving()) {
 					frog.kill();
 					audioManager.playDrowned();
@@ -155,10 +149,9 @@ public class Game extends BasicGame{
 				
 	public void checkHome() {
 		List<Position> homes=map.getHomeBlocks();
-		
+		int frogX=frog.getPosition().getX()+frog.WIDTH/2;
+		int frogY=frog.getPosition().getY()+frog.HEIGHT/2;	
 		for(Position h : homes) {
-			int frogX=frog.getPosition().getX()+frog.WIDTH/2;
-			int frogY=frog.getPosition().getY()+frog.HEIGHT/2;
 			boolean inside=(frogX>h.getX() && frogX<h.getX()+Map.TILE_RENDER_SIZE)
 					&& (frogY>h.getY() && frogY<h.getY()+Map.TILE_RENDER_SIZE);
 			if(inside && !frog.isMoving()) {

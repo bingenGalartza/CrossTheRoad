@@ -101,7 +101,7 @@ public class Menu implements ActionListener{
 			try
 			{
 				AppGameContainer appgc;
-				appgc = new AppGameContainer(new Game("Cross the street"));
+				appgc = new AppGameContainer(new Game("CROSS THE ROAD"));
 				appgc.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
 				appgc.setTargetFrameRate(250);
 				appgc.start();
@@ -139,7 +139,7 @@ public class Menu implements ActionListener{
 		
 	}
 	
-<<<<<<< HEAD
+/*<<<<<<< HEAD*/
 	private Container crearPanelScoreboard() {
 		MiPanel panel=new MiPanel(new BorderLayout(), fondo.getImage());
 		JButton b=new JButton("MENU");
@@ -267,8 +267,8 @@ public class Menu implements ActionListener{
 		return panel;
 	}
 	
-=======
->>>>>>> 3d28d3dd8d2502827a277849cc3273c36c0f02af
+/*=======
+>>>>>>> 3d28d3dd8d2502827a277849cc3273c36c0f02af*/
 	public void updateScoreboard(Score score) {
 		scoreboard.add(score);
 		Collections.sort(scoreboard, new Comparator<Score>() {
@@ -284,10 +284,10 @@ public class Menu implements ActionListener{
 		}
 		fileManager.writeScoreboard(scoreboard);
 	}
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 =======
 	
->>>>>>> 3d28d3dd8d2502827a277849cc3273c36c0f02af
+>>>>>>> 3d28d3dd8d2502827a277849cc3273c36c0f02af*/
 	public static void main(String[] args) {
 		Menu menu=new Menu();
 

@@ -11,7 +11,7 @@ public class Frog {
 	Animation animation;
 	Position pos;
 	Position drawPos;
-	boolean moving, onTrunk;
+	boolean moving, onTrunk, finished;
 	int deaths, bonuses, wins,score;
 	long time;
 
@@ -23,6 +23,7 @@ public class Frog {
 		wins = 0;
 		score = 0;
 		time = 0;
+		finished=false;
 	}
 	
 	public void initAnimation() {
@@ -113,6 +114,10 @@ public class Frog {
 		return bonuses;
 	}
 
+	public boolean isFinished() {
+		return finished;
+	}
+
 	public void resetPos() {
 		pos = new Position(Map.spawnpoint.getX(),Map.spawnpoint.getY());
 		drawPos = new Position(pos.getX(),pos.getY());
@@ -129,6 +134,7 @@ public class Frog {
 		wins++;
 		resetPos();
 		if(wins == 5) {
+			finished=true;
 			score = calcScore();
 			System.out.println("Finish! Score: " + score);
 		}

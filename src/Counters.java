@@ -8,7 +8,7 @@ import org.newdawn.slick.gui.GUIContext;
 import org.newdawn.slick.gui.TextField;
 
 public class Counters {
-	long initialTime;
+	long initialTime, finalTime;
 	Frog frog;
 	TrueTypeFont font;
 	
@@ -19,9 +19,13 @@ public class Counters {
 	}
 	
 	public long getTime() {
-		long time = (System.currentTimeMillis() - this.initialTime) /1000;
-		frog.setTime(time);
-		return time;
+		long time;
+		if(!frog.isFinished()) {
+			time = (System.currentTimeMillis() - this.initialTime) /1000;
+			frog.setTime(time);
+			finalTime=time;
+			return time;
+		}else return finalTime;
 	}
 	
 	public void draw() {

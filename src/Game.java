@@ -1,18 +1,16 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
-public class Game extends BasicGame{
+public class Game extends BasicGameState{
 	public static int WINDOW_WIDTH = 869;
 	public static int WINDOW_HEIGHT = 711;
 	static final String[] cars = {"/res/kotxeHoria.png","/res/kotxeUrdina.png","/res/kotxeBerdea.png", "/res/suhiltzailea.png", "/res/kamioia.png"};
@@ -28,12 +26,9 @@ public class Game extends BasicGame{
 	int dif=0;
 	AudioManager audioManager;
 	
-	public Game(String title) {
-		super(title);
-	}
 
 	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
+	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		map.draw();
 		for(ObstacleRow row : roadObstacles)
 			row.update();
@@ -45,10 +40,16 @@ public class Game extends BasicGame{
 		checkTrunks();
 		checkWater();
 		checkWin();
+		if(frog.isFinished()) {
+			ScoreBoard scoreboard = (ScoreBoard) game.getState(1);
+			scoreboard.setPoints(frog.getScore());
+			game.enterState(1);
+		}
+			
 	}
 
 	@Override
-	public void init(GameContainer container) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		map = new Map();
 		frog = new Frog();
 		counters=new Counters(frog);
@@ -59,7 +60,7 @@ public class Game extends BasicGame{
 	}
 
 	@Override
-	public void update(GameContainer container, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		frog.update();
 	}
 	
@@ -142,21 +143,10 @@ public class Game extends BasicGame{
 		}
 	}
 	
-	public static void main(String[] args)
-	{
-		try
-		{
-			AppGameContainer appgc;
-			appgc = new AppGameContainer(new Game("Cross the street"));
-			appgc.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
-			appgc.setTargetFrameRate(250);
-			appgc.setShowFPS(false);
-			appgc.start();
-		}
-		catch (SlickException ex)
-		{
-			Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-		}
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

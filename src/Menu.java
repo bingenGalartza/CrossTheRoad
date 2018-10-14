@@ -140,7 +140,7 @@ public class Menu implements ActionListener{
 		JPanel panelBoton=new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
 		JButton remove=new JButton("REMOVE SOCOREBOARD");
-		JPanel panelScore=new JPanel(new GridLayout(2,1,20,0));
+		JPanel panelScore=new JPanel(new  BorderLayout());
 
 		JPanel panelTitulo=new JPanel(new BorderLayout());
 		JLabel label=new JLabel("SCOREBOARD");
@@ -161,8 +161,8 @@ public class Menu implements ActionListener{
 		panelTitulo.add(label);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		panelTitulo.setOpaque(false);
-		panelScore.add(listaDatos);
-		panelScore.add(bRemove);
+		panelScore.add(listaDatos, BorderLayout.CENTER);
+		panelScore.add(bRemove, BorderLayout.SOUTH);
 		
 		panelScore.setOpaque(false);
 		panelScore.setBorder(BorderFactory.createEmptyBorder(100,50,100,50));
@@ -178,7 +178,7 @@ public class Menu implements ActionListener{
 		panel.add(panelBoton, BorderLayout.SOUTH);
 		return panel;
 	}
-
+	
 	private Container crearPanelCredits() {
 		MiPanel panelPrincipal=new MiPanel(new BorderLayout(), fondo.getImage());
 		JButton b=new JButton("MENU");
@@ -290,6 +290,5 @@ public class Menu implements ActionListener{
 		Menu menu=new Menu();
 
 	}
-
 
 }

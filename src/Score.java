@@ -21,6 +21,15 @@ public class Score {
 		String out=new String(punctuation+"-"+playerName);
 		return out;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) return false;
+		Score s = (Score) obj;
+		
+		return s.getPlayerName().equals(playerName) && (s.getPunctuation() == punctuation);
+	}
+	
 	
 	
 }

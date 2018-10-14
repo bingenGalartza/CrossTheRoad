@@ -75,7 +75,6 @@ public class Menu implements ActionListener{
 		panel.add(crearBoton("PLAY"));
 		panel.add(crearBoton("HOW TO PLAY"));
 		panel.add(crearBoton("SCOREBOARD"));
-		panel.add(crearBoton("SETTINGS"));
 		panel.add(crearBoton("CREDITS"));
 		return panel;
 	}
@@ -121,11 +120,6 @@ public class Menu implements ActionListener{
 			frame.repaint();
 			frame.revalidate();
 			break;
-		case "SETTINGS": 
-			frame.setContentPane(crearPanelSettings());
-			frame.repaint();
-			frame.revalidate();
-			break;
 		case "CREDITS": 
 			frame.setContentPane(crearPanelCredits());
 			frame.repaint();
@@ -139,11 +133,15 @@ public class Menu implements ActionListener{
 		
 	}
 	
-/*<<<<<<< HEAD*/
+
 	private Container crearPanelScoreboard() {
 		MiPanel panel=new MiPanel(new BorderLayout(), fondo.getImage());
 		JButton b=new JButton("MENU");
 		JPanel panelBoton=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+		JButton remove=new JButton("REMOVE SOCOREBOARD");
+		JPanel panelScore=new JPanel(new GridLayout(2,1,20,0));
+
 		/*JScrollPane panelScore = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);*/
 		JPanel panelScore=new JPanel(new BorderLayout());
@@ -153,6 +151,13 @@ public class Menu implements ActionListener{
 		label.setFont(new Font ("arial", Font.BOLD, 40));
 		
 		JList<Score> listaDatos = new JList<>(scoreboard.toArray(new Score[0]));
+		JPanel bRemove=new JPanel(new BorderLayout());
+		
+		remove.addActionListener(this);
+		remove.setActionCommand("REMOVE");
+		bRemove.setOpaque(false);
+		bRemove.setBorder(BorderFactory.createEmptyBorder(80,150,80,150));
+		bRemove.add(remove);
 		listaDatos.setOpaque(false);
 		listaDatos.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		listaDatos.setCellRenderer(new Renderer());
@@ -160,6 +165,8 @@ public class Menu implements ActionListener{
 		label.setHorizontalAlignment(JLabel.CENTER);
 		panelTitulo.setOpaque(false);
 		panelScore.add(listaDatos);
+		panelScore.add(bRemove);
+		
 		panelScore.setOpaque(false);
 		panelScore.setBorder(BorderFactory.createEmptyBorder(100,50,100,50));
 
@@ -294,8 +301,7 @@ public class Menu implements ActionListener{
 		return panel;
 	}
 	
-/*=======
->>>>>>> 3d28d3dd8d2502827a277849cc3273c36c0f02af*/
+
 	public void updateScoreboard(Score score) {
 		scoreboard.add(score);
 		Collections.sort(scoreboard, new Comparator<Score>() {
@@ -311,10 +317,7 @@ public class Menu implements ActionListener{
 		}
 		fileManager.writeScoreboard(scoreboard);
 	}
-/*<<<<<<< HEAD
-=======
-	
->>>>>>> 3d28d3dd8d2502827a277849cc3273c36c0f02af*/
+
 	public static void main(String[] args) {
 		Menu menu=new Menu();
 

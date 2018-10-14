@@ -20,7 +20,7 @@ public class Frog {
 		resetPos();
 		deaths=0;
 		bonuses=0;
-		wins = 4;
+		wins = 0;
 		score = 0;
 		time = 0;
 		finished=false;

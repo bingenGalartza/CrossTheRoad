@@ -100,9 +100,10 @@ public class Menu implements ActionListener{
 			try
 			{
 				AppGameContainer appgc;
-				appgc = new AppGameContainer(new Game("CROSS THE ROAD"));
+				appgc = new AppGameContainer(new Main("CROSS THE ROAD"));
 				appgc.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
 				appgc.setTargetFrameRate(250);
+				appgc.setShowFPS(false);
 				appgc.start();
 			}
 			catch (SlickException ex)
@@ -198,7 +199,7 @@ public class Menu implements ActionListener{
 		JLabel l3=new JLabel("DEVELOPMENT TEAM");
 		JLabel l4=new JLabel("IMANOL BADIOLA");
 		JLabel l5=new JLabel("BINGEN GALARTZA");
-		JLabel l6=new JLabel("IÑIGO ARENAZA");
+		JLabel l6=new JLabel("Iï¿½IGO ARENAZA");
 		JLabel l7=new JLabel("JOSEBA CARNICERO");
 		
 		l1.setForeground(Color.WHITE);
@@ -269,23 +270,6 @@ public class Menu implements ActionListener{
 		return panel;
 	}
 	
-
-	public void updateScoreboard(Score score) {
-		scoreboard.add(score);
-		Collections.sort(scoreboard, new Comparator<Score>() {
-		    @Override
-		    public int compare(Score s1, Score s2) {
-		    	int p1=s1.getPunctuation();
-		    	int p2=s2.getPunctuation();
-		        return Integer.compare(p2, p1);
-		    }
-		});
-		if (scoreboard.size()>10) {
-			scoreboard.remove(10);
-		}
-		fileManager.writeScoreboard(scoreboard);
-	}
-
 	public static void main(String[] args) {
 		Menu menu=new Menu();
 

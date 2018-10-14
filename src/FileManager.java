@@ -60,8 +60,11 @@ public class FileManager {
 			e.printStackTrace();
 		}
 	}
+	
 	public ArrayList<Score> getScoreboard(){
 		return scoreboard;
 	}
+	
+
 
 }

@@ -147,10 +147,18 @@ public class Menu implements ActionListener{
 		/*JScrollPane panelScore = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);*/
 		JPanel panelScore=new JPanel(new BorderLayout());
+		JPanel panelTitulo=new JPanel(new BorderLayout());
+		JLabel label=new JLabel("SCOREBOARD");
+		label.setForeground(Color.WHITE);
+		label.setFont(new Font ("arial", Font.BOLD, 40));
+		
 		JList<Score> listaDatos = new JList<>(scoreboard.toArray(new Score[0]));
 		listaDatos.setOpaque(false);
 		listaDatos.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		listaDatos.setCellRenderer(new Renderer());
+		panelTitulo.add(label);
+		label.setHorizontalAlignment(JLabel.CENTER);
+		panelTitulo.setOpaque(false);
 		panelScore.add(listaDatos);
 		panelScore.setOpaque(false);
 		panelScore.setBorder(BorderFactory.createEmptyBorder(100,50,100,50));
@@ -159,8 +167,9 @@ public class Menu implements ActionListener{
 		b.setActionCommand("MENU");
 
 		panelBoton.setOpaque(false);
-		panelBoton.add(b);
 		
+		panelBoton.add(b);
+		panel.add(panelTitulo, BorderLayout.NORTH);
 		panel.add(panelScore, BorderLayout.CENTER);
 		panel.add(panelBoton, BorderLayout.SOUTH);
 		return panel;
@@ -171,7 +180,14 @@ public class Menu implements ActionListener{
 		JButton remove=new JButton("REMOVE SOCOREBOARD");
 		JPanel panelCentral=new JPanel(new BorderLayout());
 		JPanel panelBoton=new JPanel(new FlowLayout(FlowLayout.RIGHT));
-
+		JPanel panelTitulo=new JPanel(new BorderLayout());
+		JLabel label=new JLabel("SETTINGS");
+		label.setForeground(Color.WHITE);
+		label.setFont(new Font ("arial", Font.BOLD, 40));
+		panelTitulo.add(label);
+		label.setHorizontalAlignment(JLabel.CENTER);
+		panelTitulo.setOpaque(false);
+		
 		b.addActionListener(this);
 		b.setActionCommand("MENU");
 		remove.addActionListener(this);
@@ -183,6 +199,7 @@ public class Menu implements ActionListener{
 		panelBoton.setOpaque(false);
 		panelBoton.add(b);
 		
+		panel.add(panelTitulo, BorderLayout.NORTH);
 		panel.add(panelCentral, BorderLayout.CENTER);
 		panel.add(panelBoton, BorderLayout.SOUTH);
 		return panel;
@@ -190,8 +207,17 @@ public class Menu implements ActionListener{
 	private Container crearPanelCredits() {
 		MiPanel panelPrincipal=new MiPanel(new BorderLayout(), fondo.getImage());
 		JButton b=new JButton("MENU");
+		JPanel panelTitulo=new JPanel(new BorderLayout());
 		JPanel panel=new JPanel(new GridLayout(8,1, 10,0));
 		JPanel panelBoton=new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		
+		JLabel label=new JLabel("CREDITS");
+		label.setForeground(Color.WHITE);
+		label.setFont(new Font ("arial", Font.BOLD, 40));
+		panelTitulo.add(label);
+		label.setHorizontalAlignment(JLabel.CENTER);
+		panelTitulo.setOpaque(false);
+		
 		JLabel l1=new JLabel("SCRUM MASTER");
 		JLabel l2=new JLabel("JULEN URIBARREN");
 		JLabel l3=new JLabel("DEVELOPMENT TEAM");
@@ -239,7 +265,7 @@ public class Menu implements ActionListener{
 		panel.add(l7);
 		
 		panel.setOpaque(false);
-		
+		panelPrincipal.add(panelTitulo, BorderLayout.NORTH);
 		panelPrincipal.add(panel, BorderLayout.CENTER);
 		panelPrincipal.add(panelBoton, BorderLayout.SOUTH);
 		return panelPrincipal;
@@ -248,6 +274,7 @@ public class Menu implements ActionListener{
 		MiPanel panel=new MiPanel(new BorderLayout(), fondo.getImage());
 		JLabel image=new JLabel(new ImageIcon("res/keyboard.png"));
 		JLabel text=new JLabel("CONTROLS");
+		
 		JButton b=new JButton("MENU");
 		JPanel panelBoton=new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		

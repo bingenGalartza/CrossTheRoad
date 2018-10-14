@@ -139,7 +139,8 @@ public class Game extends BasicGameState{
 			}else {
 				frog.kill();
 			}
-			map.reloadBonus();
+			if(!frog.isFinished())
+				map.reloadBonus();
 		}
 	}
 	

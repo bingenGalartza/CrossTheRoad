@@ -72,6 +72,7 @@ public class Frog {
 			x-=Map.TILE_RENDER_SIZE;
 			break;
 		}
+		if(x < 0) x= 0; // FIXME
 		if(isValidMovement(x,y)){
 			pos.setX(x);
 			pos.setY(y);
@@ -84,6 +85,11 @@ public class Frog {
 	public boolean isValidMovement(int x, int y) {
 		int xBlock = Util.getValidPosition(x)/ Map.TILE_RENDER_SIZE;
 		int yBlock = Util.getValidPosition(y) / Map.TILE_RENDER_SIZE;
+		/*System.out.println("ST" +
+		        Boolean.toString(x>=0)+
+				Boolean.toString(y>=0) +
+				Boolean.toString(x < (Map.WIDTH*Map.TILE_RENDER_SIZE))+
+				Boolean.toString(y < (Map.HEIGHT*Map.TILE_RENDER_SIZE)));*/
 		return ((x >= 0) && 
 				(y >= 0) &&
 			    (x < (Map.WIDTH*Map.TILE_RENDER_SIZE)) && 

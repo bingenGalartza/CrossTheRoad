@@ -153,7 +153,7 @@ public class Menu implements ActionListener{
 		remove.addActionListener(this);
 		remove.setActionCommand("REMOVE");
 		bRemove.setOpaque(false);
-		bRemove.setBorder(BorderFactory.createEmptyBorder(80,150,80,150));
+		bRemove.setBorder(BorderFactory.createEmptyBorder(0,150,80,150));
 		bRemove.add(remove);
 		listaDatos.setOpaque(false);
 		listaDatos.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);

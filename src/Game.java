@@ -148,5 +148,14 @@ public class Game extends BasicGameState{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public void restart() {
+		map = new Map();
+		frog = new Frog();
+		counters=new Counters(frog);
+		loadRows();
+	}
+	
+
 
 }

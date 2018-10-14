@@ -46,7 +46,7 @@ public class Menu implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		fileManager=new FileManager();
-		scoreboard=fileManager.getScoreboard();
+		
 		
 	}
 	private Container crearPanelVentana() {
@@ -148,11 +148,23 @@ public class Menu implements ActionListener{
 		label.setForeground(Color.WHITE);
 		label.setFont(new Font ("arial", Font.BOLD, 40));
 		
+		scoreboard=fileManager.getScoreboard();
 		JList<Score> listaDatos = new JList<>(scoreboard.toArray(new Score[0]));
 		JPanel bRemove=new JPanel(new BorderLayout());
 		
-		remove.addActionListener(this);
-		remove.setActionCommand("REMOVE");
+		remove.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<Score> list= new ArrayList();
+				for(int i=0;i<10;i++) {
+					Score s= new Score(0,"ABC");
+					list.add(s);
+					}
+				fileManager.writeScoreboard(list);
+			}
+			
+		});
 		bRemove.setOpaque(false);
 		bRemove.setBorder(BorderFactory.createEmptyBorder(0,150,80,150));
 		bRemove.add(remove);

@@ -142,9 +142,6 @@ public class Menu implements ActionListener{
 		JButton remove=new JButton("REMOVE SOCOREBOARD");
 		JPanel panelScore=new JPanel(new GridLayout(2,1,20,0));
 
-		/*JScrollPane panelScore = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);*/
-		JPanel panelScore=new JPanel(new BorderLayout());
 		JPanel panelTitulo=new JPanel(new BorderLayout());
 		JLabel label=new JLabel("SCOREBOARD");
 		label.setForeground(Color.WHITE);
@@ -181,36 +178,7 @@ public class Menu implements ActionListener{
 		panel.add(panelBoton, BorderLayout.SOUTH);
 		return panel;
 	}
-	private Container crearPanelSettings() {
-		MiPanel panel=new MiPanel(new BorderLayout(), fondo.getImage());
-		JButton b=new JButton("MENU");
-		JButton remove=new JButton("REMOVE SOCOREBOARD");
-		JPanel panelCentral=new JPanel(new BorderLayout());
-		JPanel panelBoton=new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JPanel panelTitulo=new JPanel(new BorderLayout());
-		JLabel label=new JLabel("SETTINGS");
-		label.setForeground(Color.WHITE);
-		label.setFont(new Font ("arial", Font.BOLD, 40));
-		panelTitulo.add(label);
-		label.setHorizontalAlignment(JLabel.CENTER);
-		panelTitulo.setOpaque(false);
-		
-		b.addActionListener(this);
-		b.setActionCommand("MENU");
-		remove.addActionListener(this);
-		remove.setActionCommand("REMOVE");
-		remove.setFont(new Font ("arial", Font.BOLD, 18));
-		panelCentral.setBorder(BorderFactory.createEmptyBorder(250,150,250,150));
-		panelCentral.setOpaque(false);
-		panelCentral.add(remove);
-		panelBoton.setOpaque(false);
-		panelBoton.add(b);
-		
-		panel.add(panelTitulo, BorderLayout.NORTH);
-		panel.add(panelCentral, BorderLayout.CENTER);
-		panel.add(panelBoton, BorderLayout.SOUTH);
-		return panel;
-	}
+
 	private Container crearPanelCredits() {
 		MiPanel panelPrincipal=new MiPanel(new BorderLayout(), fondo.getImage());
 		JButton b=new JButton("MENU");
